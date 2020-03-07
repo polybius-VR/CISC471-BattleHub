@@ -11,36 +11,38 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 
-public class MenuScreen implements Screen {
+public class BattleScreen implements Screen{
 	private GameScreen gameScreen;
 	private Stage stage;
 	private Game game;
 	
-	public MenuScreen(GameScreen aGameScreen) {
+	public BattleScreen(GameScreen aGameScreen) {
 		gameScreen = aGameScreen;
 		game = aGameScreen.getGame();
 		stage = new Stage(new ScreenViewport());
 		
-		TextButton playButton = new TextButton("Resume!",MyGdxGame.skin);
+		TextButton playButton = new TextButton("Fight",MyGdxGame.skin);
         playButton.setWidth(Gdx.graphics.getWidth()/2);
         playButton.setPosition(Gdx.graphics.getWidth()/2-playButton.getWidth()/2,Gdx.graphics.getHeight()/2-playButton.getHeight()/2);
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(gameScreen);
+                
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
-        TextButton exitButton = new TextButton("Title Screen!",MyGdxGame.skin);
+        TextButton exitButton = new TextButton("Flee!",MyGdxGame.skin);
         exitButton.setWidth(Gdx.graphics.getWidth()/2);
         exitButton.setPosition(Gdx.graphics.getWidth()/2-exitButton.getWidth()/2,Gdx.graphics.getHeight()/2-exitButton.getHeight()*2);
         exitButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-               game.setScreen(new TitleScreen(game));
+               gameScreen.getPlayer().setX_pos(-80);
+               gameScreen.getPlayer().setY_pos(-80);
+               game.setScreen(gameScreen);
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -50,7 +52,7 @@ public class MenuScreen implements Screen {
         stage.addActor(playButton);
         stage.addActor(exitButton);
 	}
-	
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);

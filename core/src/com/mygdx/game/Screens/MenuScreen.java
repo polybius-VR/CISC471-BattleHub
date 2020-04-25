@@ -34,7 +34,7 @@ public class MenuScreen implements Screen {
                 return true;
             }
         });
-        TextButton exitButton = new TextButton("Title Screen!",MyGdxGame.skin);
+        TextButton exitButton = new TextButton("Save and Quit!",MyGdxGame.skin);
         exitButton.setWidth(Gdx.graphics.getWidth()/2);
         exitButton.setPosition(Gdx.graphics.getWidth()/2-exitButton.getWidth()/2,Gdx.graphics.getHeight()/2-exitButton.getHeight()*2);
         exitButton.addListener(new InputListener(){

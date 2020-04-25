@@ -1,37 +1,41 @@
 package com.mygdx.game.Entities.Skills;
 
 public class Element {
+	public static enum Elements {FIRE, WATER, GRASS}
 	private String name; //Element's Name
-	private Element advantage; //What this element is strong against
-	private Element weakness; //What this element is weak against
+	private Elements advantage; //What this element is strong against
+	private Elements weakness; //What this element is weak against
 	
-	public Element() {
+	public Element(Elements e) {
+		if (e == Elements.FIRE) {
+			name = "Fire";
+			advantage = Elements.GRASS;
+			weakness = Elements.WATER;
+		}
 		
+		if (e == Elements.WATER) {
+			name = "Water";
+			advantage = Elements.FIRE;
+			weakness = Elements.GRASS;
+		}
+		
+		if (e == Elements.GRASS) {
+			name = "Grass";
+			advantage = Elements.WATER;
+			weakness = Elements.FIRE;
+		}
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Element getAdvantage() {
+	public Elements getAdvantage() {
 		return advantage;
 	}
 
-	public void setAdvantage(Element advantage) {
-		this.advantage = advantage;
-	}
-
-	public Element getWeakness() {
+	public Elements getWeakness() {
 		return weakness;
-	}
-
-	public void setWeakness(Element weakness) {
-		this.weakness = weakness;
-	}
-	
+	}	
 	
 }

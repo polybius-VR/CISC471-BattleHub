@@ -6,26 +6,52 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Entities.Skills.Element;
 import com.mygdx.game.Entities.Skills.Skill;
 
-public class Player {
+public class Player extends GameEntity{
+	public static enum PlayerClass {KNIGHT, SPELLCASTER}
 	private String name; //Player's name
 	
-	private Texture sprite; //Image to represent the player
 	private Integer x_pos = 20; //player's X position relative to the screen
 	private Integer y_pos = 0; //player's Y position relative to the screen
+	private Integer[] gridPosition = new Integer[2];
 	
-	private Integer health; //player's HP
+	private Integer MaxHealth; //player's max HP
+	private Integer health; //player's current HP
 	private Integer attack; //player's base ATK
 	private Integer defense; //player's base DEF
-	private Integer magic; //player's base magic
-	private Integer resistance; //player's base defense against magic
+	private Integer speed; //player's base SPD
 	private Integer level; //player's current level
 	private Integer experience; //player's experience points. Level up and reset the value to 0 every 100 points.
 	
+	private PlayerClass playerClass; 
 	private Element element; //player's magic element
 	private List<Skill> skills; //player's list of skills
 	
+	public Integer[] getGridPosition() {
+		return gridPosition;
+	}
+
+	public void setGridPosition(Integer gridPositionX, Integer gridPositionY) {
+		this.gridPosition = new Integer[] {gridPositionX, gridPositionY};
+	}
+
 	public Player() {
 		
+	}
+
+	public Integer getMaxHealth() {
+		return MaxHealth;
+	}
+
+	public void setMaxHealth(Integer maxHealth) {
+		MaxHealth = maxHealth;
+	}
+
+	public Integer getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(Integer speed) {
+		this.speed = speed;
 	}
 
 	public String getName() {
@@ -34,14 +60,6 @@ public class Player {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Texture getSprite() {
-		return sprite;
-	}
-
-	public void setSprite(Texture sprite) {
-		this.sprite = sprite;
 	}
 
 	public Integer getX_pos() {
@@ -74,22 +92,6 @@ public class Player {
 
 	public void setDefense(Integer defense) {
 		this.defense = defense;
-	}
-
-	public Integer getMagic() {
-		return magic;
-	}
-
-	public void setMagic(Integer magic) {
-		this.magic = magic;
-	}
-
-	public Integer getResistance() {
-		return resistance;
-	}
-
-	public void setResistance(Integer resistance) {
-		this.resistance = resistance;
 	}
 
 	public Element getElement() {
@@ -130,5 +132,13 @@ public class Player {
 
 	public void setExperience(Integer experience) {
 		this.experience = experience;
+	}
+
+	public PlayerClass getPlayerClass() {
+		return playerClass;
+	}
+
+	public void setPlayerClass(PlayerClass playerClass) {
+		this.playerClass = playerClass;
 	}
 }

@@ -20,13 +20,26 @@ public class TitleScreen implements Screen{
 		game = aGame;
 		stage = new Stage(new ScreenViewport());
 		
-		TextButton playButton = new TextButton("Play!",MyGdxGame.skin);
+		TextButton newGameButton = new TextButton("New Game",MyGdxGame.skin);
+		newGameButton.setWidth(Gdx.graphics.getWidth()/2);
+		newGameButton.setPosition(Gdx.graphics.getWidth()/2-newGameButton.getWidth()/2,Gdx.graphics.getHeight()/2-newGameButton.getHeight());
+		newGameButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new NewGameScreen(game));
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+		TextButton playButton = new TextButton("Continue",MyGdxGame.skin);
         playButton.setWidth(Gdx.graphics.getWidth()/2);
-        playButton.setPosition(Gdx.graphics.getWidth()/2-playButton.getWidth()/2,Gdx.graphics.getHeight()/2-playButton.getHeight()/2);
+        playButton.setPosition(Gdx.graphics.getWidth()/2-playButton.getWidth()/2,Gdx.graphics.getHeight()/2-playButton.getHeight()*2);
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new GameScreen(game));
+                //game.setScreen(new GameScreen(game));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -35,7 +48,7 @@ public class TitleScreen implements Screen{
         });
         TextButton exitButton = new TextButton("Quit!",MyGdxGame.skin);
         exitButton.setWidth(Gdx.graphics.getWidth()/2);
-        exitButton.setPosition(Gdx.graphics.getWidth()/2-exitButton.getWidth()/2,Gdx.graphics.getHeight()/2-exitButton.getHeight()*2);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2-exitButton.getWidth()/2,Gdx.graphics.getHeight()/2-exitButton.getHeight()*3);
         exitButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -46,6 +59,7 @@ public class TitleScreen implements Screen{
                 return true;
             }
         });
+        stage.addActor(newGameButton);
         stage.addActor(playButton);
         stage.addActor(exitButton);
         	

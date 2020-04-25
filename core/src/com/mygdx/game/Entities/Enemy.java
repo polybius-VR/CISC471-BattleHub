@@ -2,10 +2,9 @@ package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Enemy {
+public class Enemy extends GameEntity{
 	private String name; //Enemy's Name
 	
-	private Texture sprite; //Image to represent this enemy
 	private Integer x_pos; //Enemy's X position relative to the screen
 	private Integer y_pos; //Enemy's Y position relative to the screen
 	
@@ -21,12 +20,6 @@ public class Enemy {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Texture getSprite() {
-		return sprite;
-	}
-	public void setSprite(Texture sprite) {
-		this.sprite = sprite;
 	}
 	public Integer getX_pos() {
 		return x_pos;

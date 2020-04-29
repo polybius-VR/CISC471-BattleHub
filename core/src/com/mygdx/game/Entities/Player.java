@@ -1,30 +1,26 @@
 package com.mygdx.game.Entities;
 
-import java.util.List;
-
-import com.badlogic.gdx.graphics.Texture;
+import java.util.ArrayList;
 import com.mygdx.game.Entities.Skills.Element;
 import com.mygdx.game.Entities.Skills.Skill;
+import com.mygdx.game.Entities.Skills.Element.Elements;
 
-public class Player extends GameEntity{
+public class Player extends BattleEntity{
 	public static enum PlayerClass {KNIGHT, SPELLCASTER}
-	private String name; //Player's name
+	private Integer[] gridPosition = new Integer[2];	
+	private PlayerClass playerClass;
+	private Integer deathCount = 0;
 	
-	private Integer x_pos = 20; //player's X position relative to the screen
-	private Integer y_pos = 0; //player's Y position relative to the screen
-	private Integer[] gridPosition = new Integer[2];
-	
-	private Integer MaxHealth; //player's max HP
-	private Integer health; //player's current HP
-	private Integer attack; //player's base ATK
-	private Integer defense; //player's base DEF
-	private Integer speed; //player's base SPD
-	private Integer level; //player's current level
-	private Integer experience; //player's experience points. Level up and reset the value to 0 every 100 points.
-	
-	private PlayerClass playerClass; 
-	private Element element; //player's magic element
-	private List<Skill> skills; //player's list of skills
+	public Player() {
+		this.isNPC = Boolean.FALSE;
+		this.isDefeat = Boolean.FALSE;
+		this.setExperience(0);
+		this.skills = new ArrayList<Skill>();
+		this.skills.add(new Skill("Tackle", new Element(Elements.NONE), 25, Boolean.FALSE));
+		this.skills.add(new Skill("Flamethrower", new Element(Elements.FIRE), 25, Boolean.FALSE));
+		this.skills.add(new Skill("Water Gun", new Element(Elements.WATER), 25, Boolean.FALSE));
+		this.skills.add(new Skill("Nature's Power", new Element(Elements.GRASS), 25, Boolean.TRUE));
+	}
 	
 	public Integer[] getGridPosition() {
 		return gridPosition;
@@ -34,104 +30,12 @@ public class Player extends GameEntity{
 		this.gridPosition = new Integer[] {gridPositionX, gridPositionY};
 	}
 
-	public Player() {
-		
+	public void moveX_pos(Integer x_pos) {
+		super.setX_pos(super.getX_pos() + x_pos);
 	}
 
-	public Integer getMaxHealth() {
-		return MaxHealth;
-	}
-
-	public void setMaxHealth(Integer maxHealth) {
-		MaxHealth = maxHealth;
-	}
-
-	public Integer getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(Integer speed) {
-		this.speed = speed;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Integer getX_pos() {
-		return x_pos;
-	}
-
-	public void setX_pos(Integer x_pos) {
-		this.x_pos = this.x_pos + x_pos;
-	}
-
-	public Integer getY_pos() {
-		return y_pos;
-	}
-
-	public void setY_pos(Integer y_pos) {
-		this.y_pos = this.y_pos + y_pos;
-	}
-
-	public Integer getAttack() {
-		return attack;
-	}
-
-	public void setAttack(Integer attack) {
-		this.attack = attack;
-	}
-
-	public Integer getDefense() {
-		return defense;
-	}
-
-	public void setDefense(Integer defense) {
-		this.defense = defense;
-	}
-
-	public Element getElement() {
-		return element;
-	}
-
-	public void setElement(Element element) {
-		this.element = element;
-	}
-
-	public List<Skill> getSkills() {
-		return skills;
-	}
-
-	public void setSkills(List<Skill> skills) {
-		this.skills = skills;
-	}
-
-	public Integer getHealth() {
-		return health;
-	}
-
-	public void setHealth(Integer health) {
-		this.health = health;
-	}
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public Integer getExperience() {
-		return experience;
-	}
-
-	public void setExperience(Integer experience) {
-		this.experience = experience;
+	public void moveY_pos(Integer y_pos) {
+		super.setY_pos(super.getY_pos() + y_pos);
 	}
 
 	public PlayerClass getPlayerClass() {
@@ -140,5 +44,25 @@ public class Player extends GameEntity{
 
 	public void setPlayerClass(PlayerClass playerClass) {
 		this.playerClass = playerClass;
+	}
+	
+	public void increaseExperience(Integer experience) {
+		this.experience += experience;
+	}
+
+	public void increseDeathCount() {
+		this.deathCount += 1;
+	}
+	
+	public Integer getDeathCount() {
+		return deathCount;
+	}
+
+	public void setDeathCount(Integer deathCount) {
+		this.deathCount = deathCount;
+	}
+	
+	public void levelUp() {
+		
 	}
 }

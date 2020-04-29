@@ -100,19 +100,19 @@ public class NewGameScreen implements Screen{
                     		player.setPlayerClass(Player.PlayerClass.KNIGHT);
                     		player.setMaxHealth(100);
                     		player.setHealth(100);
-                    		player.setAttack(40);
-                    		player.setDefense(100);
-                    		player.setSpeed(40);
+                    		player.setAttack(6);
+                    		player.setDefense(8);
+                    		player.setSpeed(4);
                     		player.setLevel(1);
                     		player.setExperience(0);
                 		}
                     	if (BtnOption2.isChecked()) {
                     		player.setPlayerClass(Player.PlayerClass.SPELLCASTER);
-                    		player.setMaxHealth(40);
-                    		player.setHealth(40);
-                    		player.setAttack(100);
-                    		player.setDefense(40);
-                    		player.setSpeed(100);
+                    		player.setMaxHealth(60);
+                    		player.setHealth(60);
+                    		player.setAttack(10);
+                    		player.setDefense(6);
+                    		player.setSpeed(8);
                     		player.setLevel(1);
                     		player.setExperience(0);
                     	}

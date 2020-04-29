@@ -1,80 +1,43 @@
 package com.mygdx.game.Entities;
 
+import java.util.ArrayList;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Entities.Skills.Element;
+import com.mygdx.game.Entities.Skills.Element.Elements;
+import com.mygdx.game.Entities.Skills.Skill;
 
-public class Enemy extends GameEntity{
-	private String name; //Enemy's Name
+public class Enemy extends BattleEntity{
+	private Texture spriteDetail;
 	
-	private Integer x_pos; //Enemy's X position relative to the screen
-	private Integer y_pos; //Enemy's Y position relative to the screen
-	
-	private Integer health; //Enemy's base HP
-	private Integer attack; //Enemy's base ATK
-	private Integer defense; //Enemy's base DEF
-	private Integer magic; //Enemey's base magic
-	private Integer resistance; //Enemy's base magic defense
-	private Integer level; //Enemy's level (used to multiply it's base stats)
-	private Integer experience; //Experience points to be awarded when defeated
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
+	public Enemy(String spritePath, String spriteDetailPath, String name, Integer baseATK, Integer baseDEF, Integer baseSPD, Integer maxHP, Integer experience, Element element) {
+		this.isNPC = Boolean.TRUE;
+		this.isFoe = Boolean.TRUE;		
+		this.sprite = new Texture(Gdx.files.internal(spritePath));
 		this.name = name;
-	}
-	public Integer getX_pos() {
-		return x_pos;
-	}
-	public void setX_pos(Integer x_pos) {
-		this.x_pos = x_pos;
-	}
-	public Integer getY_pos() {
-		return y_pos;
-	}
-	public void setY_pos(Integer y_pos) {
-		this.y_pos = y_pos;
-	}
-	public Integer getHealth() {
-		return health;
-	}
-	public void setHealth(Integer health) {
-		this.health = health;
-	}
-	public Integer getAttack() {
-		return attack;
-	}
-	public void setAttack(Integer attack) {
-		this.attack = attack;
-	}
-	public Integer getDefense() {
-		return defense;
-	}
-	public void setDefense(Integer defense) {
-		this.defense = defense;
-	}
-	public Integer getMagic() {
-		return magic;
-	}
-	public void setMagic(Integer magic) {
-		this.magic = magic;
-	}
-	public Integer getResistance() {
-		return resistance;
-	}
-	public void setResistance(Integer resistance) {
-		this.resistance = resistance;
-	}
-	public Integer getLevel() {
-		return level;
-	}
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-	public Integer getExperience() {
-		return experience;
-	}
-	public void setExperience(Integer experience) {
+		this.attack = baseATK;
+		this.defense = baseDEF;
+		this.speed = baseSPD;
+		this.maxHealth = maxHP;
+		this.health = maxHP;
 		this.experience = experience;
+		this.element = element;
+		spriteDetail = new Texture(Gdx.files.internal(spriteDetailPath));
+		
+		skills = new ArrayList<Skill>();
+		skills.add(new Skill("Tackle", new Element(Elements.NONE), 15, Boolean.FALSE));
+		skills.add(new Skill("Flamethrower", new Element(Elements.FIRE), 15, Boolean.FALSE));
+		skills.add(new Skill("Water Gun", new Element(Elements.WATER), 15, Boolean.FALSE));
+		skills.add(new Skill("Nature's Power", new Element(Elements.GRASS), 15, Boolean.TRUE));
+		
 	}
-	
+
+	public Texture getSpriteDetail() {
+		return spriteDetail;
+	}
+
+	public void setSpriteDetail(Texture spriteDetail) {
+		this.spriteDetail = spriteDetail;
+	}
 	
 }

@@ -2,7 +2,6 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Entities.Player;
+import com.mygdx.game.Entities.Skills.Element;
 
 public class TitleScreen implements Screen{
 	private Stage stage;
@@ -39,7 +40,18 @@ public class TitleScreen implements Screen{
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                //game.setScreen(new GameScreen(game));
+            	Player p = new Player();
+            	p.setName("POLY");
+            	p.setPlayerClass(Player.PlayerClass.KNIGHT);
+        		p.setMaxHealth(100);
+        		p.setHealth(100);
+        		p.setAttack(6);
+        		p.setDefense(8);
+        		p.setSpeed(4);
+        		p.setLevel(1);
+        		p.setExperience(0);
+        		p.setElement(new Element(Element.Elements.FIRE));
+                game.setScreen(new GameScreen(game, p));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

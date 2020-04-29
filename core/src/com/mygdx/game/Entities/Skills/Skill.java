@@ -4,9 +4,13 @@ public class Skill {
 	private String name; //Skill name
 	private Element element; //Skill element bonus
 	private Integer baseAttack; //Skill base attack
+	private Boolean healBonus; //Skill has a bonus to heal the user.
 	
-	public Skill() {
-		
+	public Skill(String name, Element element, Integer baseAttack, Boolean healBonus) {
+		this.name = name;
+		this.element = element;
+		this.baseAttack = baseAttack;
+		this.healBonus = healBonus;
 	}
 
 	public String getName() {
@@ -31,6 +35,14 @@ public class Skill {
 
 	public void setBaseAttack(Integer baseAttack) {
 		this.baseAttack = baseAttack;
+	}
+
+	public Boolean getHealBonus() {
+		return healBonus;
+	}
+
+	public void setHealBonus(Boolean healBonus) {
+		this.healBonus = healBonus;
 	}
 	
 	

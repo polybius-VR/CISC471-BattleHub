@@ -8,17 +8,23 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.Entities.Enemy;
 import com.mygdx.game.Entities.GameEntity;
 import com.mygdx.game.Entities.Player;
-import com.mygdx.game.Entities.Wall;
-import com.mygdx.game.maps.Map001;
+import com.mygdx.game.maps.GameMap;
+import com.mygdx.game.maps.Level01;
+import com.mygdx.game.maps.Level02;
+import com.mygdx.game.maps.Level03;
+import com.mygdx.game.maps.Level04;
+import com.mygdx.game.maps.Level05;
+import com.mygdx.game.maps.Level06;
+import com.mygdx.game.maps.Level07;
+import com.mygdx.game.maps.Level08;
+import com.mygdx.game.maps.Level09;
+import com.mygdx.game.maps.Level10;
 
 public class GameScreen implements Screen{
 	private Game game;
@@ -26,29 +32,32 @@ public class GameScreen implements Screen{
 	private Texture gridImage;
 	private SpriteBatch batch;
 	private Player player;
-	private Enemy enemy;
-	private Map001 map01;
+	private GameMap levelMap;
 	private Label lblTextbox;
 	private Texture txtBackground;
+	private Integer currentLevel = 0;
+	
+	public GameScreen(Game aGame, Player aPlayer, Integer aCurrentLevel) {
+		this.currentLevel = aCurrentLevel;
+		init(aGame, aPlayer);
+	}
 	
 	public GameScreen(Game aGame, Player aPlayer) {
-		game = aGame;
-		stage = new Stage(new ScreenViewport());
-		batch = new SpriteBatch();
-		gridImage = new Texture(Gdx.files.internal("grid.png"));
-		lblTextbox = new Label("", MyGdxGame.skin);		
+		init(aGame, aPlayer);
+	}
+	
+	private void init(Game aGame, Player aPlayer) {
+		this.game = aGame;
+		this.stage = new Stage(new ScreenViewport());
+		this.batch = new SpriteBatch();
+		this.gridImage = new Texture(Gdx.files.internal("grid.png"));
+		this.lblTextbox = new Label("", MyGdxGame.skin);
 		
 		player = aPlayer;
 		if (player.getPlayerClass() == Player.PlayerClass.KNIGHT)
 			player.setSprite(new Texture(Gdx.files.internal("knight.png")));
 		else if (player.getPlayerClass() == Player.PlayerClass.SPELLCASTER)
 			player.setSprite(new Texture(Gdx.files.internal("wizard.png")));
-
-		map01 = new Map001();
-		
-		player.setX_pos( (Gdx.graphics.getWidth()/2 - 512) + (map01.getStartGridPosition()[0]*64) - 20);
-		player.setY_pos( Gdx.graphics.getHeight() - (Map001.max_Y-map01.getStartGridPosition()[1])*64);
-		player.setGridPosition(map01.getStartGridPosition()[0], map01.getStartGridPosition()[1]);
 		
 		lblTextbox.setColor(Color.BLACK);
 		lblTextbox.setSize(Gdx.graphics.getWidth(),160);
@@ -58,17 +67,46 @@ public class GameScreen implements Screen{
 		txtBackground = new Texture(Gdx.files.internal("background.jpg"));
 		txtBackground.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
 		
-		lblTextbox.setText(
-				"Player: " + player.getName() 
-				+ "  Element: " + player.getElement().getName()
-				+ "  Level: " + player.getLevel()
-				+ "\nHP: " + player.getHealth() + "/" + player.getMaxHealth()
-				+ "  ATK: " + player.getAttack()
-				+ "  DEF: " + player.getDefense()
-				+ " SPD: " + player.getSpeed()
-				+ "\nEXP: " + player.getExperience()
-				+ "  grid=" + player.getGridPosition()[0] + "," + player.getGridPosition()[1]
-				);
+		loadMap();
+	}
+	
+	private void loadMap() {	
+		switch (currentLevel) {
+		case 1:
+			levelMap = new Level02();
+			break;
+		case 2:
+			levelMap = new Level03();
+			break;
+		case 3:
+			levelMap = new Level04();
+			break;
+		case 4:
+			levelMap = new Level05();
+			break;
+		case 5:
+			levelMap = new Level06();
+			break;
+		case 6:
+			levelMap = new Level07();
+			break;
+		case 7:
+			levelMap = new Level08();
+			break;
+		case 8:
+			levelMap = new Level09();
+			break;
+		case 9:
+			levelMap = new Level10();
+			break;
+		default:
+			levelMap = new Level01();
+			break;
+		}
+		
+		player.setX_pos( (Gdx.graphics.getWidth()/2 - 512) + (levelMap.getStartGridPosition()[0]*64));
+		player.setY_pos( Gdx.graphics.getHeight() - (Level01.max_Y-levelMap.getStartGridPosition()[1])*64);
+		player.setGridPosition(levelMap.getStartGridPosition()[0], levelMap.getStartGridPosition()[1]);
 	}
 
 	@Override
@@ -80,10 +118,11 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.392f, 0.584f, 0.929f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		updateTextbox();
 		batch.begin();
 		batch.draw(gridImage, Gdx.graphics.getWidth()/2 - 512, Gdx.graphics.getHeight()-gridImage.getHeight(), 1024, 576);
 		batch.draw(txtBackground, 0, 0, 1280, 144);
-		map01.draw(batch);		
+		levelMap.draw(batch);		
 		lblTextbox.draw(batch, 1);		
 		batch.draw(player.getSprite(), player.getX_pos(), player.getY_pos(), 64, 64);
 		batch.end();
@@ -120,11 +159,11 @@ public class GameScreen implements Screen{
 
 	@Override
 	public void dispose() {
-		map01.dispose();
+		levelMap.dispose();
 		stage.dispose();
 		gridImage.dispose();
 		player.getSprite().dispose();
-		enemy.getSprite().dispose();
+		//enemy.getSprite().dispose();
 		batch.dispose();
 	}
 
@@ -138,40 +177,100 @@ public class GameScreen implements Screen{
 	
 	private void playerMovement() {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-			GameEntity temp = (GameEntity) map01.getGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1] + 1);
+			GameEntity temp = levelMap.getGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1] + 1);
 			if (null == temp || !temp.getIsSolid()) {
-				player.setY_pos(64);
+				player.moveY_pos(64);
 				player.setGridPosition(player.getGridPosition()[0], player.getGridPosition()[1]+1);
 			}	
 			if (null != temp && temp.getIsFoe())
-				game.setScreen(new BattleScreen(this));
+				game.setScreen(new BattleScreen(this, temp));
+			if (null != temp && temp.getIsGoal())
+				moveToNextLevel();
+			if (null != temp && temp.getIsHeal()) {
+				player.setHealth(player.getMaxHealth());
+				levelMap.removeGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1]);
+			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-			GameEntity temp = (GameEntity) map01.getGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1] - 1);
+			GameEntity temp = levelMap.getGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1] - 1);
 			if (null == temp || !temp.getIsSolid()) {
-				player.setY_pos(-64);
+				player.moveY_pos(-64);
 				player.setGridPosition(player.getGridPosition()[0], player.getGridPosition()[1] - 1);
 			}
 			if (null != temp && temp.getIsFoe())
-				game.setScreen(new BattleScreen(this));
+				game.setScreen(new BattleScreen(this, temp));
+			if (null != temp && temp.getIsGoal())
+				moveToNextLevel();
+			if (null != temp && temp.getIsHeal()) {
+				player.setHealth(player.getMaxHealth());
+				levelMap.removeGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1]);
+			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-			GameEntity temp = (GameEntity) map01.getGridContentAt(player.getGridPosition()[0] - 1, player.getGridPosition()[1]);
+			GameEntity temp = levelMap.getGridContentAt(player.getGridPosition()[0] - 1, player.getGridPosition()[1]);
 			if (null == temp || !temp.getIsSolid()) {
-				player.setX_pos(-64);
+				player.moveX_pos(-64);
 				player.setGridPosition(player.getGridPosition()[0] - 1, player.getGridPosition()[1]);
 			}
 			if (null != temp && temp.getIsFoe())
-				game.setScreen(new BattleScreen(this));
+				game.setScreen(new BattleScreen(this, temp));
+			if (null != temp && temp.getIsGoal()) 
+				moveToNextLevel();
+			if (null != temp && temp.getIsHeal()) {
+				player.setHealth(player.getMaxHealth());
+				levelMap.removeGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1]);
+			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-			GameEntity temp = (GameEntity) map01.getGridContentAt(player.getGridPosition()[0] + 1, player.getGridPosition()[1]);
+			GameEntity temp = levelMap.getGridContentAt(player.getGridPosition()[0] + 1, player.getGridPosition()[1]);
 			if (null == temp || !temp.getIsSolid()) {
-				player.setX_pos(64);
+				player.moveX_pos(64);
 				player.setGridPosition(player.getGridPosition()[0] + 1, player.getGridPosition()[1]);
 			}
 			if (null != temp && temp.getIsFoe())
-				game.setScreen(new BattleScreen(this));
+				game.setScreen(new BattleScreen(this, temp));
+			if (null != temp && temp.getIsGoal())
+				moveToNextLevel();		
+			if (null != temp && temp.getIsHeal()) {
+				player.setHealth(player.getMaxHealth());
+				levelMap.removeGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1]);
+			}
 		}
 	}
+	
+	private void moveToNextLevel() {
+		if (currentLevel == 9) {
+			currentLevel = 0;
+		} else {
+			currentLevel += 1;
+		}
+		loadMap();
+	}
+	
+	private void updateTextbox() {
+		lblTextbox.setText(
+				"Player: " + player.getName() 
+				+ "  Element: " + player.getElement().getName()
+				+ "  Level: " + player.getLevel()
+				+ "\nHP: " + player.getHealth() + "/" + player.getMaxHealth()
+				+ "  ATK: " + player.getAttack()
+				+ "  DEF: " + player.getDefense()
+				+ " SPD: " + player.getSpeed()
+				+ "\nEXP: " + player.getExperience()
+				+ "  grid=" + player.getGridPosition()[0] + "," + player.getGridPosition()[1]
+				);
+	}
+	
+	public void mapReset() {
+		loadMap();
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
+	public void removeGridContentAt(Integer posX, Integer posY) {
+		levelMap.removeGridContentAt(posX, posY);
+	}
+	
 }

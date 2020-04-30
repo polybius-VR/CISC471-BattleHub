@@ -2,17 +2,17 @@ package com.mygdx.game.maps;
 
 
 import com.mygdx.game.Entities.Enemy;
-import com.mygdx.game.Entities.Skills.Element;
+import com.mygdx.game.Entities.Skills.Element.Elements;
 
 public class Level03 extends GameMap{
 	
 	@Override
 	protected void initMap() {
-		Enemy e1 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 20, new Element(Element.Elements.FIRE));
-		Enemy e2 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 20, new Element(Element.Elements.FIRE));
-		Enemy e3 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 20, new Element(Element.Elements.FIRE));
-		Enemy e4 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 20, new Element(Element.Elements.FIRE));
-		Enemy e5 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 20, new Element(Element.Elements.FIRE));
+		Enemy e1 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
+		Enemy e2 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
+		Enemy e3 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
+		Enemy e4 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
+		Enemy e5 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
 		
 		e.add(e1);
 		e.add(e2);

@@ -1,5 +1,7 @@
 package com.mygdx.game.Screens;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Game;
@@ -33,7 +35,6 @@ public class BattleScreen implements Screen{
 	private Game game;
 	private SpriteBatch batch;
 	private Label lblTextbox;
-	private Label devTextbox;
 	private Label lblPlayerStats;
 	private Label lblEnemyStats;
 	private Enemy enemy;
@@ -41,13 +42,13 @@ public class BattleScreen implements Screen{
 	private String playerStats;
 	private String enemyStats;
 	private String txtLog = "";
-	private String devLog;
 	private Boolean AttackSelected = Boolean.FALSE;
 	private Boolean firstTurn;
 	private Queue<String> actionLog = new Queue<String>();
 	private Boolean waitForKey = Boolean.TRUE;
 	private Integer selectedAttackindex = 0;
 	private Boolean fleeFlag;
+	private Texture background;
 	
 	private BattleEntity first;
 	private BattleEntity second;
@@ -67,8 +68,8 @@ public class BattleScreen implements Screen{
 		batch = new SpriteBatch();
 		lblTextbox = new Label("", MyGdxGame.skin);
 		lblPlayerStats = new Label("", MyGdxGame.skin);
-		lblEnemyStats = new Label("", MyGdxGame.skin);
-		devTextbox = new Label("", MyGdxGame.skin);		
+		lblEnemyStats = new Label("", MyGdxGame.skin);		
+		background = new Texture(Gdx.files.internal("battleBG.png"));
 		player = gameScreen.getPlayer();
 		enemy = (Enemy) aEnemy;
 		firstTurn = Boolean.TRUE;
@@ -78,10 +79,52 @@ public class BattleScreen implements Screen{
 	}
 	
 	private void initBattle() {
-		skill1 = new TextButton("Tackle",MyGdxGame.skin);
+		List<TextButton> attackButtons = new ArrayList<TextButton>();
+		skill1 = new TextButton("",MyGdxGame.skin);
 		skill1.setWidth(Gdx.graphics.getWidth()/4);
 		skill1.setPosition(0, 160);
-		skill1.addListener(new InputListener(){
+		skill1.setVisible(Boolean.FALSE);
+		attackButtons.add(skill1);
+		        
+        skill2 = new TextButton("",MyGdxGame.skin);
+        skill2.setWidth(Gdx.graphics.getWidth()/4);
+        skill2.setPosition(skill2.getWidth(), 160);
+        skill2.setVisible(Boolean.FALSE);
+        attackButtons.add(skill2);
+                
+        skill3 = new TextButton("",MyGdxGame.skin);
+        skill3.setWidth(Gdx.graphics.getWidth()/4);
+        skill3.setPosition(skill3.getWidth()*2, 160);
+        skill3.setVisible(Boolean.FALSE);
+        attackButtons.add(skill3);
+        
+        skill4 = new TextButton("",MyGdxGame.skin);
+        skill4.setWidth(Gdx.graphics.getWidth()/4);
+        skill4.setPosition(skill4.getWidth()*3, 160);
+        skill4.setVisible(Boolean.FALSE);
+        attackButtons.add(skill4);
+        
+        TextButton fleeButton = new TextButton("Flee!",MyGdxGame.skin);
+        fleeButton.setWidth(Gdx.graphics.getWidth()/4);
+        fleeButton.setPosition(fleeButton.getWidth()*3,Gdx.graphics.getHeight()-fleeButton.getHeight());
+        fleeButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	AttackSelected = Boolean.TRUE;
+            	fleeFlag = Boolean.TRUE;
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        
+        for (int i = 0; i < player.getSkills().size(); i++) {
+        	attackButtons.get(i).setText(player.getSkills().get(i).getName());
+        	attackButtons.get(i).setVisible(Boolean.TRUE);;
+        }
+        
+        skill1.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
             	selectedAttackindex = 0;
@@ -92,10 +135,6 @@ public class BattleScreen implements Screen{
                 return true;
             }
         });
-        
-        skill2 = new TextButton("Flamethrower",MyGdxGame.skin);
-        skill2.setWidth(Gdx.graphics.getWidth()/4);
-        skill2.setPosition(skill2.getWidth(), 160);
         skill2.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -107,10 +146,6 @@ public class BattleScreen implements Screen{
                 return true;
             }
         });
-        
-        skill3 = new TextButton("Water Gun",MyGdxGame.skin);
-        skill3.setWidth(Gdx.graphics.getWidth()/4);
-        skill3.setPosition(skill3.getWidth()*2, 160);
         skill3.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -122,30 +157,11 @@ public class BattleScreen implements Screen{
                 return true;
             }
         });
-        
-        skill4 = new TextButton("Nature's Power",MyGdxGame.skin);
-        skill4.setWidth(Gdx.graphics.getWidth()/4);
-        skill4.setPosition(skill4.getWidth()*3, 160);
         skill4.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
             	selectedAttackindex = 3;
             	AttackSelected = Boolean.TRUE;
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        
-        TextButton fleeButton = new TextButton("Flee!",MyGdxGame.skin);
-        fleeButton.setWidth(Gdx.graphics.getWidth()/4);
-        fleeButton.setPosition(fleeButton.getWidth()*3,Gdx.graphics.getHeight()-fleeButton.getHeight());
-        fleeButton.addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-            	AttackSelected = Boolean.TRUE;
-            	fleeFlag = Boolean.TRUE;
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -168,12 +184,6 @@ public class BattleScreen implements Screen{
 		lblEnemyStats.setPosition(Gdx.graphics.getWidth()/2 - lblEnemyStats.getWidth()/2, 500);
 		lblEnemyStats.setWrap(Boolean.TRUE);
 		
-		devTextbox.setColor(Color.BLACK);
-		devTextbox.setSize(Gdx.graphics.getWidth(),160);
-		devTextbox.setPosition(5, Gdx.graphics.getHeight()-200);
-		devTextbox.setWrap(Boolean.TRUE);
-		
-		//actionLog = "A wild " + enemy.getName() + " appeared\n";
 		battleLog("A wild " + enemy.getName() + " appeared");
 		
         addBackgroundGuide();
@@ -184,7 +194,6 @@ public class BattleScreen implements Screen{
         stage.addActor(lblTextbox);
         stage.addActor(lblPlayerStats);
         stage.addActor(lblEnemyStats);
-        //stage.addActor(devTextbox);
         stage.addActor(fleeButton);
 	}
 
@@ -199,11 +208,12 @@ public class BattleScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		updateTextbox();
 		battleSystem();
-		stage.act();
-		stage.draw();
+		stage.act();		
 		batch.begin();
+		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.draw(enemy.getSpriteDetail(), Gdx.graphics.getWidth()/2 - enemy.getSpriteDetail().getWidth()/2, Gdx.graphics.getHeight()/2 - enemy.getSpriteDetail().getHeight()/2, enemy.getSpriteDetail().getWidth(), enemy.getSpriteDetail().getHeight());
 		batch.end();
+		stage.draw();
 	}
 
 	@Override
@@ -234,6 +244,8 @@ public class BattleScreen implements Screen{
 	public void dispose() {
 		stage.dispose();
 		enemy.getSpriteDetail().dispose();
+		player.getSprite().dispose();
+		background.dispose();
 	}
 
 	private void addBackgroundGuide(){
@@ -254,12 +266,10 @@ public class BattleScreen implements Screen{
 		if (firstTurn) {
 			if (player.getSpeed() >= enemy.getSpeed()) {
 				first = player;
-				second = enemy;
-				//battleTurn(player, enemy);				
+				second = enemy;				
 			} else {
 				first = enemy;
 				second = player;
-				//battleTurn(enemy, player);
 			}
 			for (int i=0; i < actionLog.size; i++) {		
 				txtLog += actionLog.get(i) + "\n";
@@ -287,7 +297,7 @@ public class BattleScreen implements Screen{
 					if (fleeFlag) {
 						fleeFlag = Boolean.FALSE;
 						Random random = new Random();
-		            	int randomNumber = random.nextInt(100 - 1) + 1;
+		            	int randomNumber = random.nextInt(101);
 		            	if (randomNumber >= 50) {
 		            		battleLog("Escape Successful!");		            		
 		    				gameScreen.removeGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1]);		    				
@@ -301,13 +311,12 @@ public class BattleScreen implements Screen{
 							}
 		            	}
 					} else {
-						//actionLog += source.getName() + " Turn!";
 						battleLog(source.getName() + "'s Turn!");
 						battleLog(source.getName() + " Attacks with " + source.getSkills().get(selectedAttackindex).getName());
 						Integer dmg = damageCalc(source, target, source.getSkills().get(selectedAttackindex));
 						target.setHealth(target.getHealth() - dmg);
 						battleLog(target.getName() + " lost " + dmg + " HP");
-						//actionLog += "\n" + target.getName() + " lost " + dmg + " HP";
+						
 						first = enemy;
 						second = player;
 						txtLog = "";
@@ -318,13 +327,13 @@ public class BattleScreen implements Screen{
 				}				
 			} else {
 				Random random = new Random();
-				int randomNumber = random.nextInt(source.getSkills().size() - 0) + 0;
-				//actionLog += source.getName() + " Turn!";
+				int randomNumber = random.nextInt(source.getSkills().size());
+
 				battleLog(source.getName() + "'s Turn!");
 				battleLog(source.getName() + " Attacks with " + source.getSkills().get(randomNumber).getName());
 				Integer dmg = damageCalc(source, target, source.getSkills().get(randomNumber));
 				target.setHealth(target.getHealth() - dmg);
-				//actionLog += "\n" + target.getName() + " lost " + dmg + " HP";
+
 				battleLog(target.getName() + " lost " + dmg + " HP");
 				first = player;
 				second = enemy;
@@ -342,7 +351,10 @@ public class BattleScreen implements Screen{
 						//remove enemy from map
 						gameScreen.removeGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1]);
 						waitForKey = Boolean.FALSE;
-			        	game.setScreen(gameScreen);			        	
+						if (player.getLevelUpFlag())
+							game.setScreen(new SkillMenuScreen(gameScreen));
+						else
+							game.setScreen(gameScreen);			        	
 			        }
 			    }
 			}
@@ -353,23 +365,18 @@ public class BattleScreen implements Screen{
 						player.setHealth(player.getMaxHealth());
 						player.setIsDefeat(Boolean.FALSE);
 						waitForKey = Boolean.FALSE;
-			        	game.setScreen(gameScreen);			        	
+						game.setScreen(gameScreen);			        	
 			        }
 			    }
 			}
 		}
 	}
 	
-	private void updateTextbox() {
-		devLog = player.getName() + " ATK:" + player.getAttack() + " DEF:" + player.getAttack() + " SPD:" + player.getSpeed() + " SkillATK:" + player.getSkills().get(0).getBaseAttack() + " SkillTYPE:" + player.getSkills().get(0).getElement().getName() + "\n" +
-				enemy.getName() + " ATK:" + enemy.getAttack() + " DEF:" + enemy.getAttack() + " SPD:" + enemy.getSpeed() + " SkillATK:" + enemy.getSkills().get(0).getBaseAttack() + " SkillTYPE:" + enemy.getSkills().get(0).getElement().getName();
-		
+	private void updateTextbox() {		
 		playerStats = player.getName() + " HP:" + player.getHealth() + "/" + player.getMaxHealth();
 		enemyStats = enemy.getName() + " HP:" + enemy.getHealth() + "/" + enemy.getMaxHealth();
-		
-		//lblTextbox.setText(playerStats + "  " + enemyStats + "\n" + actionLog);		
-		lblTextbox.setText(txtLog);		
-		devTextbox.setText(devLog);
+				
+		lblTextbox.setText(txtLog);
 		lblPlayerStats.setText(playerStats);
 		lblEnemyStats.setText(enemyStats);
 	}
@@ -380,16 +387,15 @@ public class BattleScreen implements Screen{
 		float defBoost = 2;
 		
 		Random random = new Random();
-		int randomNumber = random.nextInt(100 - 1) + 1;
+		int randomNumber = random.nextInt(101);
 		
 		res = ((source.getAttack().floatValue() / atkLim) * skill.getBaseAttack()) - (target.getDefense() * defBoost);
-		if (!skill.getElement().getElement().equals(Element.Elements.NONE)) {
-			if (skill.getElement().getElement().equals(target.getElement().getWeakness())) { 
+		if (!skill.getElement().equals(Element.Elements.NONE)) {
+			if (skill.getElement().equals(target.getWeakness())) { 
 				res = res * 2;
 				battleLog("It's an effective attack!");
 			} 
-			if (skill.getElement().getElement().equals(target.getElement().getAdvantage())) {
-			//if (skill.getElement().getWeakness().equals(target.getElement().getAdvantage())) {
+			if (skill.getElement().equals(target.getAdvantage())) {
 				res = res / 2;
 				battleLog("It's not very effective!");
 			}
@@ -397,7 +403,7 @@ public class BattleScreen implements Screen{
 		if (res <= 0) 
 			res = 1f;
 		
-		if (randomNumber == 99) {
+		if (randomNumber >= 95) {
 			res = res*2;
 			battleLog("It's a critical hit!");
 		}

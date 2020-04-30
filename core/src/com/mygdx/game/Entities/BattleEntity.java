@@ -2,7 +2,7 @@ package com.mygdx.game.Entities;
 
 import java.util.List;
 
-import com.mygdx.game.Entities.Skills.Element;
+import com.mygdx.game.Entities.Skills.Element.Elements;
 import com.mygdx.game.Entities.Skills.Skill;
 
 public class BattleEntity extends GameEntity{
@@ -16,7 +16,9 @@ public class BattleEntity extends GameEntity{
 	protected Integer speed; //Entity's base SPD
 	protected Integer level; //Entity's level (used to multiply it's base stats)
 	protected Integer experience; //Entity's Experience tracker
-	protected Element element; //Entity's magic element
+	protected Elements element; //Entity's magic element
+	protected Elements weakness;
+	protected Elements advantage;
 	protected Boolean isDefeat; //a flag to keep track whether or not this entity was defeated in battle.
 	protected Boolean isNPC; //a flag to keep track whether this is a playable or non playable character.
 	protected List<Skill> skills; //list of skills
@@ -86,10 +88,10 @@ public class BattleEntity extends GameEntity{
 	public void setExperience(Integer experience) {
 		this.experience = experience;
 	}
-	public Element getElement() {
+	public Elements getElement() {
 		return element;
 	}
-	public void setElement(Element element) {
+	public void setElement(Elements element) {
 		this.element = element;
 	}
 	public Boolean getIsDefeat() {
@@ -115,4 +117,39 @@ public class BattleEntity extends GameEntity{
 	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
 	}
+
+	public Elements getWeakness() {
+		switch (element) {
+		case FIRE:
+			weakness = Elements.WATER;
+			break;
+		case WATER:
+			weakness = Elements.GRASS;
+			break;
+		case GRASS:
+			weakness = Elements.FIRE;
+			break;
+		case NONE:
+			break;
+		}
+		return weakness;
+	}
+
+	public Elements getAdvantage() {
+		switch (element) {
+		case FIRE:
+			advantage = Elements.GRASS;
+			break;
+		case WATER:
+			advantage = Elements.FIRE;
+			break;
+		case GRASS:
+			advantage = Elements.WATER;
+			break;
+		case NONE:
+			break;
+		}
+		return advantage;
+	}
+	
 }

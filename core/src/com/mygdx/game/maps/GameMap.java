@@ -19,6 +19,8 @@ public class GameMap {
 	public static Integer max_X = 16; //The maps are defined as a 16x9 grid.
 	public static Integer max_Y = 9;
 	
+	private Texture ground = new Texture(Gdx.files.internal("ground.png"));
+	
 	protected GameEntity[][] grid = new GameEntity[max_Y][max_X];	
 	protected Wall w = new Wall();	
 	protected StartPoint s = new StartPoint();
@@ -58,11 +60,16 @@ public class GameMap {
 						batch.draw((grid[i][j]).getSprite(), (Gdx.graphics.getWidth()/2 - 512) + 64*j, (Gdx.graphics.getHeight()) - 64*(max_Y-i), 64, 64);
 					if (grid[i][j].getClass().equals(StartPoint.class))
 						batch.draw((grid[i][j]).getSprite(), (Gdx.graphics.getWidth()/2 - 512) + 64*j, (Gdx.graphics.getHeight()) - 64*(max_Y-i), 64, 64);
-					if (grid[i][j].getClass().equals(Enemy.class))
+					if (grid[i][j].getClass().equals(Enemy.class)) {
+						batch.draw(ground, (Gdx.graphics.getWidth()/2 - 512) + 64*j, (Gdx.graphics.getHeight()) - 64*(max_Y-i), 64, 64);
 						batch.draw((grid[i][j]).getSprite(), (Gdx.graphics.getWidth()/2 - 512) + 64*j, (Gdx.graphics.getHeight()) - 64*(max_Y-i), 64, 64);
-					if (grid[i][j].getClass().equals(HealPoint.class))
+					}
+					if (grid[i][j].getClass().equals(HealPoint.class)) {
+						batch.draw(ground, (Gdx.graphics.getWidth()/2 - 512) + 64*j, (Gdx.graphics.getHeight()) - 64*(max_Y-i), 64, 64);
 						batch.draw((grid[i][j]).getSprite(), (Gdx.graphics.getWidth()/2 - 512) + 64*j, (Gdx.graphics.getHeight()) - 64*(max_Y-i), 64, 64);
-				}
+					}
+				} else 
+					batch.draw(ground, (Gdx.graphics.getWidth()/2 - 512) + 64*j, (Gdx.graphics.getHeight()) - 64*(max_Y-i), 64, 64);
 			}			
 		}		
 	}

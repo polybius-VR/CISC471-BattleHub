@@ -1,16 +1,20 @@
 package com.mygdx.game.Entities.Skills;
 
+import com.mygdx.game.Entities.Skills.Element.Elements;
+
 public class Skill {
 	private String name; //Skill name
-	private Element element; //Skill element bonus
+	private Elements element; //Skill element bonus
 	private Integer baseAttack; //Skill base attack
 	private Boolean healBonus; //Skill has a bonus to heal the user.
+	private Integer learnAtLevel; //The level at which this skill is learnt at.
 	
-	public Skill(String name, Element element, Integer baseAttack, Boolean healBonus) {
+	public Skill(String name, Elements element, Integer baseAttack, Boolean healBonus, Integer learnAtLevel) {
 		this.name = name;
 		this.element = element;
 		this.baseAttack = baseAttack;
 		this.healBonus = healBonus;
+		this.learnAtLevel = learnAtLevel;
 	}
 
 	public String getName() {
@@ -21,11 +25,11 @@ public class Skill {
 		this.name = name;
 	}
 
-	public Element getElement() {
+	public Elements getElement() {
 		return element;
 	}
 
-	public void setElement(Element element) {
+	public void setElement(Elements element) {
 		this.element = element;
 	}
 
@@ -43,6 +47,14 @@ public class Skill {
 
 	public void setHealBonus(Boolean healBonus) {
 		this.healBonus = healBonus;
+	}
+
+	public Integer getLearnAtLevel() {
+		return learnAtLevel;
+	}
+
+	public void setLearnAtLevel(Integer learnAtLevel) {
+		this.learnAtLevel = learnAtLevel;
 	}
 	
 	

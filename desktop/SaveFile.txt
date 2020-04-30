@@ -1,0 +1,11 @@
+0
+poly
+6
+8
+4
+100
+60
+1
+KNIGHT
+GRASS
+Tackle,15,NONE,false,1

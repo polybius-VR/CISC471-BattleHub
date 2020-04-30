@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Entities.Player;
 import com.mygdx.game.Entities.Skills.Element;
+import com.mygdx.game.Entities.Skills.Element.Elements;
 
 public class NewGameScreen implements Screen{
 	private Stage stage;
@@ -129,11 +130,11 @@ public class NewGameScreen implements Screen{
                 		}
                 	} else {
                 		if (BtnOption1.isChecked())
-                    		player.setElement(new Element(Element.Elements.FIRE));
+                    		player.setElement(Elements.FIRE);
                     	if (BtnOption2.isChecked())
-                    		player.setElement(new Element(Element.Elements.WATER));
+                    		player.setElement(Elements.WATER);
                     	if (BtnOption3.isChecked())
-                    		player.setElement(new Element(Element.Elements.GRASS));
+                    		player.setElement(Element.Elements.GRASS);
                     	
                     	invalidFlag = Boolean.FALSE;
                     	
@@ -293,6 +294,7 @@ public class NewGameScreen implements Screen{
 		BtnOption1.setText("Knight");
 		BtnOption2.setText("Spellcaster");
 		BtnBack.setText("Previous");
+		BtnNext.setText("Next");
 	}
 	
 	private void selectType() {

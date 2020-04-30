@@ -38,7 +38,10 @@ public class GameScreen implements Screen{
 	private Integer currentLevel = 0;
 	
 	public GameScreen(Game aGame, Player aPlayer, Integer aCurrentLevel) {
-		this.currentLevel = aCurrentLevel;
+		if (aCurrentLevel < 0 || aCurrentLevel > 9) {
+			this.currentLevel = 0;
+		} else
+			this.currentLevel = aCurrentLevel;
 		init(aGame, aPlayer);
 	}
 	
@@ -250,7 +253,7 @@ public class GameScreen implements Screen{
 	private void updateTextbox() {
 		lblTextbox.setText(
 				"Player: " + player.getName() 
-				+ "  Element: " + player.getElement().getName()
+				+ "  Element: " + player.getElement()
 				+ "  Level: " + player.getLevel()
 				+ "\nHP: " + player.getHealth() + "/" + player.getMaxHealth()
 				+ "  ATK: " + player.getAttack()
@@ -273,4 +276,11 @@ public class GameScreen implements Screen{
 		levelMap.removeGridContentAt(posX, posY);
 	}
 	
+	public Integer getCurrentLevel() {
+		return this.currentLevel;
+	}
+	
+	public void learnSkillMenu() {
+		game.setScreen(new SkillMenuScreen(this));
+	}
 }

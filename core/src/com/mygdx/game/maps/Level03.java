@@ -8,11 +8,11 @@ public class Level03 extends GameMap{
 	
 	@Override
 	protected void initMap() {
-		Enemy e1 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
-		Enemy e2 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
-		Enemy e3 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
-		Enemy e4 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
-		Enemy e5 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 320, Elements.FIRE, 2);
+		Enemy e1 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 45, 45, 45, 800, 6400, Elements.FIRE, 10);
+		Enemy e2 = new Enemy("dragon.png", "dragondetail.png", "Dragon", 30, 25, 30, 600, 3200, Elements.FIRE, 8);
+		Enemy e3 = new Enemy("darkknight.png", "darkknightdetail.png", "Knight", 25, 50, 30, 400, 3200, Elements.NONE, 8);
+		Enemy e4 = new Enemy("ent.png", "entdetail.png", "Ent", 25, 20, 20, 330, 3200, Elements.GRASS, 8);
+		Enemy e5 = new Enemy("slime.png", "slimedetail.png", "Slime", 30, 40, 30, 330, 3200, Elements.WATER, 8);
 		
 		e.add(e1);
 		e.add(e2);
@@ -33,6 +33,8 @@ public class Level03 extends GameMap{
 
 		grid[3][4] = e.get(e.indexOf(e4)); // can move left [3][3]
 		grid[5][12] = e.get(e.indexOf(e5)); // can move down [4][12]
+		
+		grid[4][1] = h;
 
 		// walls
 		grid[2][2] = w; // w1

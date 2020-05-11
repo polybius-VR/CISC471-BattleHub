@@ -351,8 +351,12 @@ public class BattleScreen implements Screen{
 						//remove enemy from map
 						gameScreen.removeGridContentAt(player.getGridPosition()[0], player.getGridPosition()[1]);
 						waitForKey = Boolean.FALSE;
-						if (player.getLevelUpFlag())
-							game.setScreen(new SkillMenuScreen(gameScreen));
+						if (player.getLevelUpFlag()) {
+							if (player.getLevel() >= 10)
+								player.setLevelUpFlag(Boolean.FALSE);
+							else
+								game.setScreen(new SkillMenuScreen(gameScreen));
+						}
 						else
 							game.setScreen(gameScreen);			        	
 			        }
@@ -364,6 +368,7 @@ public class BattleScreen implements Screen{
 						gameScreen.mapReset();
 						player.setHealth(player.getMaxHealth());
 						player.setIsDefeat(Boolean.FALSE);
+						player.increseDeathCount();
 						waitForKey = Boolean.FALSE;
 						game.setScreen(gameScreen);			        	
 			        }

@@ -260,7 +260,8 @@ public class GameScreen implements Screen{
 				+ "  DEF: " + player.getDefense()
 				+ " SPD: " + player.getSpeed()
 				+ "\nEXP: " + player.getExperience()
-				+ "  grid=" + player.getGridPosition()[0] + "," + player.getGridPosition()[1]
+				+ "  Position =" + player.getGridPosition()[0] + "," + player.getGridPosition()[1]
+				+ "\n Death Count = " + player.getDeathCount()
 				);
 	}
 	

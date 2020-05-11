@@ -1,11 +1,14 @@
-0
-poly
-6
-8
-4
-100
-60
-1
-KNIGHT
+2
+a
+70
+36
+58
+160
+35300
+11
+SPELLCASTER
 GRASS
-Tackle,15,NONE,false,1
+Bind,15,NONE,true,5
+Nature's power,10,GRASS,true,2
+Body Slam,40,NONE,false,9
+Leaf Blade,40,GRASS,false,8

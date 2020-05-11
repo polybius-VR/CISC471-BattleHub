@@ -8,11 +8,11 @@ public class Level04 extends GameMap{
 	
 	@Override
 	protected void initMap() {
-		Enemy e1 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 620, Elements.FIRE, 2);
-		Enemy e2 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 620, Elements.FIRE, 2);
-		Enemy e3 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 620, Elements.FIRE, 2);
-		Enemy e4 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 620, Elements.FIRE, 2);
-		Enemy e5 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 620, Elements.FIRE, 2);
+		Enemy e1 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 3200, Elements.FIRE, 2);
+		Enemy e2 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 3200, Elements.FIRE, 2);
+		Enemy e3 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 3200, Elements.FIRE, 2);
+		Enemy e4 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 3200, Elements.FIRE, 2);
+		Enemy e5 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 3200, Elements.FIRE, 2);
 		
 		e.add(e1);
 		e.add(e2);

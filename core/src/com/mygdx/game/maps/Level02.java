@@ -1,18 +1,23 @@
 package com.mygdx.game.maps;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Entities.Enemy;
+import com.mygdx.game.Entities.HealPoint;
 import com.mygdx.game.Entities.Skills.Element.Elements;
 
 public class Level02 extends GameMap{	
 	
 	@Override
 	protected void initMap() {
-		Enemy e1 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 200, Elements.FIRE, 2);
-		Enemy e2 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 200, Elements.FIRE, 2);
-		Enemy e3 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 200, Elements.FIRE, 2);
-		Enemy e4 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 200, Elements.FIRE, 2);
-		Enemy e5 = new Enemy("dragon.png", "dragondetail.png", "Dragon Pup", 7, 7, 5, 30, 200, Elements.FIRE, 2);
+		Enemy e1 = new Enemy("slime.png", "slimedetail.png", "Slime", 15, 20, 20, 250, 1600, Elements.WATER, 6);
+		Enemy e2 = new Enemy("slime.png", "slimedetail.png", "Slime", 15, 20, 20, 250, 1600, Elements.WATER, 6);
+		Enemy e3 = new Enemy("slime.png", "slimedetail.png", "Slime", 22, 45, 26, 250, 1600, Elements.WATER, 8);
+		Enemy e4 = new Enemy("dragon.png", "dragondetail.png", "Dragon", 20, 40, 40, 400, 1600, Elements.FIRE, 6);
+		Enemy e5 = new Enemy("ent.png", "entdetail.png", "Ent", 20, 18, 15, 300, 1600, Elements.GRASS, 7);
+		HealPoint h2 = new HealPoint();
+		h2.setSprite(new Texture(Gdx.files.internal("meat.png")));
 		
 		e.add(e1);
 		e.add(e2);
@@ -27,12 +32,15 @@ public class Level02 extends GameMap{
 		// goal
 		grid[1][14] = g;
 		// enemies 
-		grid[4][1] = e.get(e.indexOf(e1)); // normal
+		grid[2][1] = e.get(e.indexOf(e1)); // normal
 		grid[1][10] = e.get(e.indexOf(e2));
 		grid[4][9] = e.get(e.indexOf(e3));
 
 		grid[4][14] = e.get(e.indexOf(e4)); // can move left [4][13]
 		grid[2][5] = e.get(e.indexOf(e5)); // can move up [3][5]
+		
+		grid[1][3] = h;
+		grid[2][12] = h2;
 
 		// walls
 		grid[6][1] = w; // w1
